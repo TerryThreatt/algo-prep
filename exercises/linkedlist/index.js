@@ -47,7 +47,7 @@ class LinkedList {
       if (!node.next) {
         return node;
       }
-      return (node = node.next);
+      node = node.next
     }
   }
 
@@ -62,6 +62,37 @@ class LinkedList {
 
     return (this.head = this.head.next);
   }
+
+    removeLast() {
+        if (!this.head) {
+            return;
+        }
+
+        if (!this.head.next) {
+            this.head = null;
+            return;
+        }
+
+        let previous = this.head;
+        let node = this.head.next;
+
+        while (node.next) {
+            previous = node;
+            node = node.next;
+        }
+
+        previous.next = null;
+    }
+
+    insertLast(data) {
+        const last = this.getLast();
+
+        if (last) {
+            last.next = new Node(data);
+        } else {
+            this.head = new Node(data);
+        }
+    }
 }
 
 const list = new LinkedList();
