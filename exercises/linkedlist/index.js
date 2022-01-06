@@ -113,7 +113,7 @@ class LinkedList {
 
   removeAt(index) {
     if (!this.head) {
-      return null;
+      return;
     }
 
     if (index === 0) {
@@ -121,11 +121,44 @@ class LinkedList {
       return;
     }
 
-      const prev = this.getAt(index - 1);
-      if (!prev || !prev.next) {
-          return;
-      }
-      prev.next = prev.next.next;
+    const previous = this.getAt(index - 1);
+    if (!previous || !previous.next) {
+      return;
+    }
+    previous.next = previous.next.next;
+  }
+
+  insertAt(data, index) {
+    if (!this.head) {
+      this.head = new Node(data);
+      return;
+    }
+
+    if (index === 0) {
+      this.head = new Node(data, this.head);
+      return;
+    }
+
+    const previous = this.getAt(index - 1) || this.getLast();
+    const node = new Node(data, previous.next);
+    previous.next = node;
+  }
+  forEach(fn) {
+    let node = this.head;
+    let counter = 0;
+    while (node) {
+      fn(node, counter);
+      node = node.next;
+      counter++;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    let node = this.head;
+    while (node) {
+      yield node;
+      node = node.next;
+    }
   }
 }
 
